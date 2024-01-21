@@ -3,6 +3,7 @@ package com.example.notes.data.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.notes.data.entity.NoteDbEntity
@@ -22,10 +23,13 @@ interface NotesDao {
     @Query("SELECT * FROM notes_table WHERE id = :id")
     fun get(id: Long): Flow<NoteDbEntity?>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(note: NoteDbEntity)
 
-    @Update(entity = NoteDbEntity::class)
+//    @Query("UPDATE notes_table SET title = :title, desc = :desc  WHERE id = :id")
+//    suspend fun update(id: Long, title: String, desc: String)
+
+    @Update//(entity = NoteDbEntity::class, I)
     suspend fun update(note: NoteDbEntity)
 
     @Delete

@@ -1,5 +1,6 @@
 package com.example.notes.repository
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -20,26 +21,30 @@ class NotesRepositoryImpl(
 
     override suspend fun insert(note: Note) {
         dao.add(NoteDbEntity(
-            note._id, note.description, note.title
+            id = note._id,
+            description = note.description,
+            title = note.title
         ))
-
-//        Log.e("insert", note.toString())
     }
 
     override suspend fun update(note: Note) {
         dao.update(
             NoteDbEntity(
-                note._id,
-                note.description,
-                note.title
+                id = note._id,
+                description = note.description,
+                title = note.title
             )
         )
+
+        Log.e("update1", note.toString())
     }
 
     override suspend fun remove(note: Note) {
         dao.remove(
             NoteDbEntity(
-                note._id, note.description, note.title
+                id = note._id,
+                description = note.description,
+                title = note.title
             )
         )
     }

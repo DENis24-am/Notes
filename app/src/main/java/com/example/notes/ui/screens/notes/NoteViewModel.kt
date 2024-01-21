@@ -35,19 +35,19 @@ class NoteViewModel @Inject constructor(private val repository: NotesRepository)
                     }
                 }
             }
-            Log.e("data", id.toString())
         }
     }
 
     fun changeTitle(title: String) {
         viewModelScope.launch {
             val temp = _state.value.data.description
+            val id = _state.value.data._id
             _state.update {
                 it.copy(
                     data = Note(
-                        0,
-                        temp,
-                        title
+                        _id = id,
+                        description = temp,
+                        title = title
                     )
                 )
             }
@@ -57,12 +57,13 @@ class NoteViewModel @Inject constructor(private val repository: NotesRepository)
     fun changeDesc(desc: String) {
         viewModelScope.launch {
             val temp = _state.value.data.title
+            val id = _state.value.data._id
             _state.update {
                 it.copy(
                     data = Note(
-                        0,
-                        desc,
-                        temp
+                        _id = id,
+                        description = desc,
+                        title = temp
                     )
                 )
             }
@@ -79,7 +80,6 @@ class NoteViewModel @Inject constructor(private val repository: NotesRepository)
         viewModelScope.launch {
             repository.update(_state.value.data)
         }
-        Log.d("hello", "Hello")
     }
 
     fun deleteNote() {

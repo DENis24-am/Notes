@@ -6,6 +6,7 @@ import com.example.notes.data.dao.NotesDao
 import com.example.notes.data.database.NoteDataBase
 import com.example.notes.repository.NotesRepository
 import com.example.notes.repository.NotesRepositoryImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

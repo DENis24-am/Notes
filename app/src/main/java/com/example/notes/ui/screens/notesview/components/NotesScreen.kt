@@ -25,14 +25,10 @@ fun NotesScreen(
 
     val notes = viewModel.notesState.collectAsLazyPagingItems()
 
-//    val refreshState = rememberPullRefreshState(
-//        refreshing = state.isCamsLoading || state.isPreviewLoading,
-//        onRefresh = onRefresh
-//    )
-
     if (state.isLoading) {
         DefaultContent()
     } else if (notes.itemCount > 0) {
+        Log.e("GET", notes[0].toString())
         NotesList(
             viewGrid = viewGrid,
             notes = notes,

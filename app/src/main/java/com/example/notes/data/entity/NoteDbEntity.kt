@@ -7,13 +7,10 @@ import androidx.room.PrimaryKey
 import com.example.notes.model.Note
 
 @Entity(
-    tableName = "notes_table",
-    indices = [
-        Index("id")
-    ]
+    tableName = "notes_table"
 )
 data class NoteDbEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "desc") val description: String,
     @ColumnInfo(name = "title") val title: String,
 ) {
