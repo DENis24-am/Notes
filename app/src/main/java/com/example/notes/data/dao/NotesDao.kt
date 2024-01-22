@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.notes.data.entity.NoteDbEntity
+import com.example.notes.model.Note
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -26,10 +27,7 @@ interface NotesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(note: NoteDbEntity)
 
-//    @Query("UPDATE notes_table SET title = :title, desc = :desc  WHERE id = :id")
-//    suspend fun update(id: Long, title: String, desc: String)
-
-    @Update//(entity = NoteDbEntity::class, I)
+    @Update
     suspend fun update(note: NoteDbEntity)
 
     @Delete

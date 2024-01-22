@@ -75,7 +75,7 @@ class NotesRepositoryImpl(
                 pageSize = PAGE_SIZE,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = {
+            pagingSourceFactory = { //не использовать класс  NotesPagingSource
                 NotesPagingSource(loader, PAGE_SIZE)
             }
         ).flow
@@ -83,6 +83,10 @@ class NotesRepositoryImpl(
 
     override fun get(id: Long): Flow<Note?> {
         return dao.get(id).map { it?.toNote() }
+    }
+
+    override suspend fun getPagingNotes(limit: Int, offset: Int): List<Note> {
+        return dao.getAllPagin(limit, offset).map { it.toNote() }
     }
 
     companion object {

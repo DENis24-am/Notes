@@ -18,4 +18,6 @@ interface NotesRepository {
     fun getPageNotes(): Flow<PagingData<Note>>
 
     fun get(id: Long): Flow<Note?>
+
+    suspend fun getPagingNotes(limit: Int, offset: Int): List<Note>
 }

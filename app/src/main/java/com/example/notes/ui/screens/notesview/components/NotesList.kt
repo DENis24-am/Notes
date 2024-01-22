@@ -14,7 +14,7 @@ import com.example.notes.model.Note
 @Composable
 fun NotesList(
     viewGrid: Boolean = false,
-    notes: LazyPagingItems<Note>,
+    notes: List<Note>,
     onItemClick: (Note) -> Unit
 ) {
     AnimatedContent(targetState = viewGrid, label = "") {viewGridAnimate ->
@@ -26,7 +26,7 @@ fun NotesList(
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(
-                notes.itemCount,
+                notes.size,
                 key = {
                     notes[it]?._id ?: it
                 }
