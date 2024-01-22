@@ -42,16 +42,4 @@ class NotesScreenViewModel @Inject constructor(
             }
         }
     }
-
-    fun getNotes() {
-        viewModelScope.launch {
-            repository.getAll().collect { list ->
-                _state.update { state ->
-                    state.copy(
-                        data = list
-                    )
-                }
-            }
-        }
-    }
 }
