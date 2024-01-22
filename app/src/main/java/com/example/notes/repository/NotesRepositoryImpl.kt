@@ -12,6 +12,7 @@ import com.example.notes.model.Note
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
@@ -66,6 +67,7 @@ class NotesRepositoryImpl(
     }
 
     override fun getPageNotes(): Flow<PagingData<Note>> {
+        Log.e("GET NOTES COUNT", "1")
         val loader: NotesLoader = { index, size ->
             getNotes(index, size)
         }
