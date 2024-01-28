@@ -4,17 +4,12 @@ import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.notes.data.NotesLoader
-import com.example.notes.data.NotesPagingSource
+import androidx.paging.map
 import com.example.notes.data.dao.NotesDao
 import com.example.notes.data.entity.NoteDbEntity
 import com.example.notes.model.Note
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 
 class NotesRepositoryImpl(
     private val dao: NotesDao
@@ -54,33 +49,16 @@ class NotesRepositoryImpl(
         return dao.getAll().map { list -> list.map { it.toNote() } }
     }
 
-    override suspend fun getNotes(pageIndex: Int, pageSize: Int): List<Note>
-    = withContext(Dispatchers.IO) {
-        delay(1000L) //для виду
-
-        val offset = pageIndex * pageSize
-
-        val list = dao.getAllPagin(pageSize, offset)
-
-        return@withContext list
-            .map { it.toNote() }
-    }
-
     override fun getPageNotes(): Flow<PagingData<Note>> {
-        Log.e("GET NOTES COUNT", "1")
-        val loader: NotesLoader = { index, size ->
-            getNotes(index, size)
-        }
-
         return Pager(
-            config = PagingConfig(
+            PagingConfig(
                 pageSize = PAGE_SIZE,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = {
-                NotesPagingSource(loader, PAGE_SIZE)
-            }
-        ).flow
+            pagingSourceFactory = dao::getAllPagin
+        ).flow.map {
+            it.map { it.toNote() }
+        }
     }
 
     override fun get(id: Long): Flow<Note?> {

@@ -23,12 +23,11 @@ fun NotesScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
-    val notes = viewModel.notesState.collectAsLazyPagingItems()
+    val notes = viewModel.notes.collectAsLazyPagingItems()
 
     if (state.isLoading) {
         DefaultContent()
     } else if (notes.itemCount > 0) {
-        Log.e("GET", notes[0].toString())
         NotesList(
             viewGrid = viewGrid,
             notes = notes,

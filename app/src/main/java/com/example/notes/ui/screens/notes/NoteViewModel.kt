@@ -1,29 +1,27 @@
 package com.example.notes.ui.screens.notes
 
-import android.provider.ContactsContract.CommonDataKinds.Email
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.notes.data.dao.NotesDao
-import com.example.notes.data.database.NoteDataBase
 import com.example.notes.model.Note
 import com.example.notes.repository.NotesRepository
 import com.example.notes.ui.screens.notes.model.NotesEditState
-import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class NoteViewModel @Inject constructor(private val repository: NotesRepository) : ViewModel() {
+class NoteViewModel @AssistedInject constructor(
+    @Assisted id: Long?,
+    private val repository: NotesRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(NotesEditState())
     val state = _state.asStateFlow()
 
-    fun init(id: Long?) {
+    init {
         if(id != null) {
             viewModelScope.launch {
                 repository.get(id).collect { note ->
@@ -94,5 +92,10 @@ class NoteViewModel @Inject constructor(private val repository: NotesRepository)
         } else {
             createNote()
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(id: Long?): NoteViewModel
     }
 }

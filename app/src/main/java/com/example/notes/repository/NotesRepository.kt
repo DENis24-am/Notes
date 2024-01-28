@@ -11,8 +11,6 @@ interface NotesRepository {
 
     suspend fun remove(note: Note)
 
-    suspend fun getNotes(pageIndex: Int, limit: Int): List<Note>
-
     fun getAll(): Flow<List<Note>>
 
     fun getPageNotes(): Flow<PagingData<Note>>
