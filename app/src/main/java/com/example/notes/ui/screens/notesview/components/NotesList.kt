@@ -28,7 +28,7 @@ fun NotesList(
             items(
                 notes.itemCount,
                 key = {
-                    notes[it]?._id ?: it
+                    notes[it]?.id ?: it
                 }
             ) {
                 val note = notes[it] ?: Note(0, "", "")

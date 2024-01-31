@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.update
 data class NotesEditState(
     val canDelete: Boolean = false,
     val data: Note = Note(
-                0,
-                "",
-                ""
+                id = 0,
+                description = "",
+                title = ""
             )
 )

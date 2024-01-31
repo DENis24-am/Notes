@@ -17,7 +17,7 @@ class NotesRepositoryImpl(
 
     override suspend fun insert(note: Note) {
         dao.add(NoteDbEntity(
-            id = note._id,
+            id = note.id,
             description = note.description,
             title = note.title
         ))
@@ -26,7 +26,7 @@ class NotesRepositoryImpl(
     override suspend fun update(note: Note) {
         dao.update(
             NoteDbEntity(
-                id = note._id,
+                id = note.id,
                 description = note.description,
                 title = note.title
             )
@@ -38,7 +38,7 @@ class NotesRepositoryImpl(
     override suspend fun remove(note: Note) {
         dao.remove(
             NoteDbEntity(
-                id = note._id,
+                id = note.id,
                 description = note.description,
                 title = note.title
             )
